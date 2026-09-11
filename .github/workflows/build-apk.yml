@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -22,54 +22,35 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
-        run: npm install --no-package-lock
+      - name: Enable Corepack & Install Dependencies
+        run: |
+          corepack enable
+          pnpm install
 
       - name: Build web app
-        run: npm run build
+        run: pnpm run build
 
-      - name: Check and add Android platform
-        run: |
-          if [ ! -d "android" ]; then
-            echo "Android directory not found. Adding platform..."
-            npx cap add android
-          else
-            echo "Android directory already exists. Skipping add."
-          fi
+      - name: Add Android platform
+        run: npx cap add android
 
-      - name: Sync Capacitor with Android
+      - name: Sync Capacitor
         run: npx cap sync android
 
-      - name: Setup Java 17
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
-          cache: gradle
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Grant execute permission for gradlew
-        working-directory: android
-        run: chmod +x gradlew
 
       - name: Build debug APK
         working-directory: android
-        run: ./gradlew assembleDebug --stacktrace
+        run: chmod +x gradlew && ./gradlew assembleDebug
 
-      - name: Verify APK exists
-        run: |
-          ls -la android/app/build/outputs/apk/debug/
-
-      - name: Copy and rename APK
-        run: |
-          mkdir -p artifacts
-          cp android/app/build/outputs/apk/debug/app-debug.apk artifacts/CricketScore-Pro.apk
+      - name: Rename APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk CricketScore-Pro.apk
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: CricketScore-Pro-APK
-          path: artifacts/CricketScore-Pro.apk
-          retention-days: 30
+          path: CricketScore-Pro.apk
