@@ -1,0 +1,10 @@
+{
+  "description": "Effortlessly score cricket matches offline with a comprehensive app that tracks player statistics, match details, and advanced analytics for all formats.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
