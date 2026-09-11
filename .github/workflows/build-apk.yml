@@ -25,7 +25,7 @@ jobs:
       - name: Enable Corepack & Install Dependencies
         run: |
           corepack enable
-          pnpm install
+          pnpm install --no-frozen-lockfile
 
       - name: Build web app
         run: pnpm run build
