@@ -1,7 +1,7 @@
-name: Build CricketScore Pro APK[cite: 1]
+name: Build CricketScore Pro APK
 
 on:
-  workflow_dispatch:
++  workflow_dispatch:
   push:
     branches:
       - main
@@ -53,6 +53,3 @@ jobs:
         with:
           name: CricketScore-Pro-APK
           path: CricketScore-Pro.apk
-```[cite: 1]
-
-To use this, create a folder structure in your repository named `.github/workflows/`, and save the file inside it as `build-apk.yml`.
