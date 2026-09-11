@@ -1,4 +1,4 @@
-name: Build CricketScoring-Pro APK
+name: Build CricketScore Pro APK
 
 on:
   workflow_dispatch:
@@ -28,7 +28,7 @@ jobs:
           pnpm install --no-frozen-lockfile --config.minimum-release-age=0
 
       - name: Build web app
-        run: pnpm run build
+        run: pnpm --config.minimum-release-age=0 run build
 
       - name: Add Android platform
         run: npx cap add android
@@ -54,3 +54,4 @@ jobs:
         with:
           name: CricketScore-Pro-APK
           path: CricketScore-Pro.apk
+        
